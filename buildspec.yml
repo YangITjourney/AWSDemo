@@ -12,7 +12,7 @@ phases:
     commands:
       - echo "Building the project"
       - mkdir -p build # Create a directory for the build output
-      - cp -r * build/ # Copy all files into the build directory (including app.js, index.html, css, images, etc.)
+      - cp -r ./* build/ # Copy all files into the build directory (including app.js, index.html, css, images, etc.)
       - cd build
       - zip -r ../app.zip . # Create the zip file of the build directory
 
