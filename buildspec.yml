@@ -1,25 +1,19 @@
 version: 0.2
 
-phases:
-  install:
-    runtime-versions:
-      nodejs: 16
-    commands:
-      - echo Installing express manually...
-      - npm install express # Install express manually
-
-  build:
-    commands:
-      - echo "Building the project"
-      - mkdir -p build # Create the build directory
-      - rsync -av --exclude 'build' ./ build/ # Use rsync to copy all files except 'build'
-      - cd build
-      - zip -r ../app.zip . # Create the zip file in the root directory (not in build/)
-    
-  post_build:
-    commands:
-      - echo "Build completed. The app.zip file is ready for deployment."
-
-artifacts:
-  files:
-    - app.zip # Ensure this matches the location of the app.zip file at the root
+phases: 
+    install:
+        runtime-versions:
+            nodejs: latest
+        commands:
+            - echo "installing something"
+    pre_build:
+        commands: 
+            - echo "we are in the pre build phase"
+    build:
+        commands:
+            - echo "we are in the build block"
+            - echo "we will run some tests"
+            - grep -Fq "Yang" index.html
+    post_build:
+        commands:
+            - echo "we are in the post build phase"
