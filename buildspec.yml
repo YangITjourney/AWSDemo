@@ -3,23 +3,23 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: latest # Ensure this matches the version of Node.js you're using
+      nodejs: 16
     commands:
-      - echo "Installing express"
-      - npm install express # Install express directly without using package.json
+      - echo Installing express manually...
+      - npm install express # Install express manually
 
   build:
     commands:
       - echo "Building the project"
-      - mkdir -p build # Create a directory for the build output
-      - cp -r ./* build/ # Copy all files into the build directory (including app.js, index.html, css, images, etc.)
+      - mkdir -p build # Create the build directory
+      - rsync -av --exclude 'build' ./ build/ # Use rsync to copy all files except 'build'
       - cd build
-      - zip -r ../app.zip . # Create the zip file of the build directory
-
+      - zip -r ../app.zip . # Create the zip file in the root directory (not in build/)
+    
   post_build:
     commands:
       - echo "Build completed. The app.zip file is ready for deployment."
 
 artifacts:
   files:
-    - app.zip # This is the file that AWS CodePipeline will deploy to Beanstalk
+    - app.zip # Ensure this matches the location of the app.zip file at the root
